@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="glass-card p-4 p-md-5">
+        <span class="eyebrow">{{ 'Add movie' if mode == 'add' else 'Edit movie' }}</span>
+        <h1 class="display-6 fw-bold mb-4">{{ 'Add a new movie' if mode == 'add' else 'Update movie details' }}</h1>
+        <form method="POST" enctype="multipart/form-data" class="row g-4">
+          {{ form.hidden_tag() }}
+          <div class="col-12">
+            {{ form.title.label(class_='form-label') }}
+            {{ form.title(class_='form-control form-control-lg', placeholder='Movie title') }}
+          </div>
+
+          <div class="col-12">
+            {{ form.tmdb_query.label(class_='form-label') }}
+            {{ form.tmdb_query(class_='form-control', placeholder='Search TMDB for poster / metadata (optional)') }}
+            <div class="form-hint">Type a movie name here if you want to fetch a poster from TMDB.</div>
+          </div>
+
+          <div class="col-12">
+            {{ form.poster_upload.label(class_='form-label') }}
+            {{ form.poster_upload(class_='form-control') }}
+            <div class="form-hint">Or upload your own poster image.</div>
+          </div>
+
+          <div class="col-md-6">
+            {{ form.genre.label(class_='form-label') }}
+            {{ form.genre(class_='form-select') }}
+          </div>
+          <div class="col-md-6">
+            {{ form.year.label(class_='form-label') }}
+            {{ form.year(class_='form-control', placeholder='Year') }}
+          </div>
+          <div class="col-12">
+            {{ form.description.label(class_='form-label') }}
+            {{ form.description(class_='form-control', rows='6', placeholder='Short description') }}
+          </div>
+          <div class="col-12 d-flex gap-2 flex-wrap">
+            {{ form.submit(class_='btn btn-primary btn-lg') }}
+            <a href="{{ url_for('main.index') }}#catalog" class="btn btn-outline-light btn-lg">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

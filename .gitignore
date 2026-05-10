@@ -1,0 +1,11 @@
+.env
+READMEdraft.md
+instance/cinema.db
+app/static/uploads/*
+!app/static/uploads/.gitkeep
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+docs/
+slides/

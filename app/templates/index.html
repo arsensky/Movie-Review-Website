@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero-section">
+  <div class="hero-overlay"></div>
+  <div class="container hero-content">
+    <div class="row align-items-center min-vh-80">
+      <div class="col-lg-8">
+        <span class="eyebrow">Movie reviews • ratings • posters</span>
+        <h1 class="display-3 fw-black mb-3">Tasmacritic</h1>
+        <p class="lead hero-lead mb-4">Discover. Review. Explore Cinema.</p>
+        <a href="#catalog" class="btn btn-light btn-lg px-4 me-2">Explore catalog</a>
+        <a href="{{ url_for('main.add_movie') }}" class="btn btn-outline-light btn-lg px-4">Add a movie</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container form-bridge" id="name-entry">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="glass-card p-4 p-md-5">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <div>
+            <h2 class="h4 mb-1">Welcome to Tasmacritic!</h2>
+            <p class="text-secondary mb-4">
+              Discover, rate, and review movies with ease.
+            </p>
+            <h2 class="h5 mb-1">Platform features</h2>
+            <p class="text-secondary mb-4">
+              Browse movies, add your own, upload posters, rate films, filter by genre, and explore pages of reviews.
+            </p>
+            <h2 class="h5 mb-1">TMDB Integration</h2>
+            <p class="text-secondary mb-4">
+              Import movie details automatically using your own TMDB API key through a local <code>.env</code> file.
+            </p>
+            <h2 class="h5 mb-1">Get started instantly</h2>
+            <p class="text-secondary mb-0">
+              No passwords. No accounts. Just your name.
+            </p>
+          </div>
+        </div>
+        <form method="POST" class="row g-3 align-items-end">
+          {{ name_form.hidden_tag() }}
+          <div class="col-md-8">
+            {{ name_form.display_name.label(class_='form-label') }}
+            {{ name_form.display_name(class_='form-control form-control-lg', placeholder='(e.g. "Arsen")') }}
+          </div>
+          <div class="col-md-4">
+            {{ name_form.submit(class_='btn btn-primary btn-lg w-100') }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5" id="catalog">
+  <div class="section-head d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+    <div>
+      <span class="eyebrow">Movie catalog</span>
+      <h2 class="section-title mb-1">Browse all films</h2>
+      <p class="text-secondary mb-0">{{ all_movie_count }} total movies in the library.</p>
+    </div>
+    <div class="catalog-meta text-lg-end">
+      <div class="count-text">Showing {{ showing_start }}-{{ showing_end }} of {{ total_movies }} movies</div>
+      <div class="text-secondary">Page {{ page }} of {{ total_pages }}</div>
+    </div>
+  </div>
+
+  <form method="GET" class="glass-card p-3 p-md-4 mb-4 filter-form">
+    <div class="row g-3 align-items-end">
+      <div class="col-lg-5">
+        <label class="form-label">Search</label>
+        <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Search titles, genres, or descriptions">
+      </div>
+      <div class="col-lg-3">
+        <label class="form-label">Genre</label>
+        <select name="genre" class="form-select">
+          <option value="">All genres</option>
+          {% for value, label in genre_choices %}
+            <option value="{{ value }}" {% if selected_genre == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-lg-2">
+        <label class="form-label">Sort</label>
+        <select name="sort" class="form-select">
+          {% for value, label in sort_options %}
+            <option value="{{ value }}" {% if sort_mode == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-lg-2 d-grid">
+        <button class="btn btn-primary">Apply</button>
+      </div>
+    </div>
+  </form>
+
+  {% if movies %}
+  <div class="row g-4">
+    {% for movie in movies %}
+    <div class="col-md-6 col-xl-4">
+      <article class="movie-card h-100">
+        <a href="{{ url_for('main.movie_detail', movie_id=movie.id) }}" class="movie-poster-wrap">
+          <img src="{{ url_for('static', filename=movie.poster_filename) }}" alt="{{ movie.title }} poster" class="movie-poster">
+        </a>
+        <div class="movie-card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <h3 class="h5 mb-1"><a href="{{ url_for('main.movie_detail', movie_id=movie.id) }}" class="movie-link">{{ movie.title }}</a></h3>
+              <div class="small text-secondary">{{ movie.genre }} • {{ movie.year }}</div>
+            </div>
+            <span class="rating-pill rating-{{ movie.rating_bucket }}">{{ movie.average_rating if movie.average_rating else '—' }}</span>
+          </div>
+          <p class="movie-excerpt mt-3">{{ movie.description[:140] }}{% if movie.description|length > 140 %}...{% endif %}</p>
+          <div class="d-flex justify-content-between align-items-center mt-4 flex-wrap gap-2">
+            <span class="small text-secondary">{{ movie.review_count }} reviews</span>
+            <div class="d-flex gap-2 flex-wrap">
+              <a href="{{ url_for('main.movie_detail', movie_id=movie.id) }}#review-form" class="btn btn-sm btn-warning text-dark">Rate</a>
+              <a href="{{ url_for('main.edit_movie', movie_id=movie.id) }}" class="btn btn-sm btn-outline-light">Edit</a>
+              <form method="POST" action="{{ url_for('main.delete_movie', movie_id=movie.id) }}" onsubmit="return confirm('Delete this movie?');">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if total_pages > 1 %}
+  <nav class="mt-4">
+    <ul class="pagination justify-content-center flex-wrap gap-1">
+      <li class="page-item {% if page == 1 %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for('main.index', q=query, genre=selected_genre, sort=sort_mode, page=page-1) }}">Previous</a>
+      </li>
+      {% for n in range(1, total_pages + 1) %}
+      <li class="page-item {% if n == page %}active{% endif %}">
+        <a class="page-link" href="{{ url_for('main.index', q=query, genre=selected_genre, sort=sort_mode, page=n) }}">{{ n }}</a>
+      </li>
+      {% endfor %}
+      <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+        <a class="page-link" href="{{ url_for('main.index', q=query, genre=selected_genre, sort=sort_mode, page=page+1) }}">Next</a>
+      </li>
+    </ul>
+  </nav>
+  {% endif %}
+
+  <div class="catalog-footer glass-card p-3 mt-4 text-center">
+    Showing {{ showing_start }}-{{ showing_end }} of {{ total_movies }} movies • {{ all_movie_count }} total movies available
+  </div>
+  {% else %}
+    <div class="glass-card p-5 text-center">
+      <h3>No movies found.</h3>
+      <p class="text-secondary mb-3">Try another search or add a new movie.</p>
+      <a href="{{ url_for('main.add_movie') }}" class="btn btn-primary">Add Movie</a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

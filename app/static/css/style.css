@@ -1,0 +1,226 @@
+:root {
+  --bg: #070b16;
+  --bg-soft: rgba(15, 23, 42, 0.72);
+  --card: rgba(8, 15, 28, 0.72);
+  --line: rgba(255, 255, 255, 0.10);
+  --text: #f8fafc;
+  --muted: rgba(248, 250, 252, 0.72);
+  --accent: #8b5cf6;
+  --accent-2: #22d3ee;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background:
+    radial-gradient(circle at top, rgba(139, 92, 246, 0.18), transparent 30%),
+    radial-gradient(circle at right, rgba(34, 211, 238, 0.10), transparent 25%),
+    linear-gradient(180deg, #050816 0%, #09111f 50%, #050816 100%);
+  color: var(--text);
+}
+
+.nav-glass {
+  background: rgba(4, 8, 20, 0.78);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--line);
+}
+
+.letter-space { letter-spacing: 0.08em; }
+.nav-badge,
+.movie-count-pill,
+.rating-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.nav-badge {
+  padding: 0.45rem 0.85rem;
+  background: rgba(139, 92, 246, 0.18);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+}
+.nav-badge-soft {
+  background: rgba(34, 211, 238, 0.15);
+  border-color: rgba(34, 211, 238, 0.25);
+}
+
+.hero-section {
+  position: relative;
+  min-height: 86vh;
+  background: linear-gradient(180deg, rgba(5, 8, 22, 0.25), rgba(5, 8, 22, 0.94)),
+    url('../images/bg-img.png') center/cover no-repeat;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--line);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 25%);
+}
+.hero-content { position: relative; z-index: 1; }
+.min-vh-80 { min-height: 70vh; }
+.fw-black { font-weight: 800; }
+.eyebrow {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.68);
+  font-size: 0.76rem;
+  margin-bottom: 0.8rem;
+}
+.hero-lead { max-width: 36rem; color: rgba(255,255,255,0.82); font-size: 1.2rem; }
+
+.glass-card,
+.movie-card,
+.review-item,
+.detail-poster-shell,
+.form-bridge {
+  background: var(--card);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(18px);
+}
+.glass-card { border-radius: 1.5rem; }
+
+.form-control,
+.form-select {
+  background-color: rgba(255,255,255,0.06);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.form-control:focus,
+.form-select:focus {
+  background-color: rgba(255,255,255,0.08);
+  color: var(--text);
+  border-color: rgba(139,92,246,0.55);
+  box-shadow: 0 0 0 0.2rem rgba(139,92,246,0.15);
+}
+.form-select option {
+  background-color: #1e2233;
+  color: white;
+}
+.form-control::placeholder { color: rgba(248,250,252,0.50); }
+.form-label { color: rgba(255,255,255,0.88); }
+.form-hint { color: rgba(255,255,255,0.55); margin-top: 0.35rem; font-size: 0.9rem; }
+
+.movie-card {
+  border-radius: 1.6rem;
+  overflow: hidden;
+  transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+}
+.movie-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(139,92,246,0.40);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.45);
+}
+.movie-poster-wrap { display: block; aspect-ratio: 2 / 3; background: rgba(255,255,255,0.03); }
+.movie-poster {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+}
+.movie-card-body { padding: 1.15rem; }
+.movie-link { color: var(--text); text-decoration: none; }
+.movie-link:hover { color: #ddd6fe; }
+.movie-excerpt, .movie-description { color: rgba(255,255,255,0.74); line-height: 1.65; }
+
+.detail-poster-shell {
+  border-radius: 1.6rem;
+  overflow: hidden;
+}
+.detail-poster { width: 100%; display: block; aspect-ratio: 2 / 3; object-fit: cover; }
+
+.rating-pill {
+  min-width: 3.1rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid transparent;
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+}
+.rating-big { min-width: 4.1rem; font-size: 1.15rem; }
+.rating-5 { background: linear-gradient(135deg, #22c55e, #16a34a); color: #051b0d; }
+.rating-4 { background: linear-gradient(135deg, #f6c95c, #d8a617); color: #1b1300; }
+.rating-3 { background: linear-gradient(135deg, #fb923c, #f97316); color: #261100; }
+.rating-2 { background: linear-gradient(135deg, #fda4af, #fb7185); color: #3d0812; }
+.rating-1 { background: linear-gradient(135deg, #ef4444, #b91c1c); color: #fff; }
+.rating-0 { background: rgba(255,255,255,0.12); }
+
+.review-list { display: grid; gap: 1rem; }
+.review-item { border-radius: 1.25rem; padding: 1rem 1.1rem; }
+
+.section-title { font-weight: 800; letter-spacing: -0.03em; }
+.count-text { font-weight: 700; font-size: 1.05rem; }
+.movie-count-pill {
+  padding: 0.5rem 0.9rem;
+  background: rgba(59, 130, 246, 0.16);
+  border: 1px solid rgba(59, 130, 246, 0.24);
+}
+
+.pagination .page-link {
+  background: rgba(255,255,255,0.06);
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.pagination .page-item.active .page-link {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-color: transparent;
+}
+.pagination .page-item.disabled .page-link {
+  background: rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.35);
+}
+
+.catalog-footer { color: rgba(255,255,255,0.85); }
+.site-footer {
+  border-top: 1px solid var(--line);
+  background: rgba(4, 8, 20, 0.9);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border: none;
+}
+.btn-outline-light,
+.btn-outline-danger {
+  border-color: rgba(255,255,255,0.2);
+}
+
+.empty-state {
+  border: 1px dashed rgba(255,255,255,0.18);
+  border-radius: 1rem;
+}
+
+.form-bridge {
+  margin-top: -4rem;
+}
+
+.form-bridge {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.name-entry-panel {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.name-entry-panel .form-control,
+.name-entry-panel .form-select {
+  background-color: rgba(255,255,255,0.08);
+}
+
+.name-entry-panel .form-control:focus,
+.name-entry-panel .form-select:focus {
+  background-color: rgba(255,255,255,0.10);
+}
+
+@media (max-width: 991.98px) {
+  .hero-section { min-height: 78vh; }
+  .display-3 { font-size: 3rem; }
+}

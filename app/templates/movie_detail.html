@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="container my-5">
+  <div class="row g-4 align-items-start">
+    <div class="col-lg-4">
+      <div class="detail-poster-shell">
+        <img src="{{ url_for('static', filename=movie.poster_filename) }}" class="detail-poster" alt="{{ movie.title }} poster">
+      </div>
+    </div>
+    <div class="col-lg-8">
+      <div class="glass-card p-4 p-md-5">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+          <div>
+            <span class="eyebrow">Movie details</span>
+            <h1 class="display-6 fw-bold mb-2">{{ movie.title }}</h1>
+            <div class="text-muted">{{ movie.genre }} • {{ movie.year }} • Added by {{ movie.added_by }}</div>
+          </div>
+          <span class="rating-pill rating-{{ movie.rating_bucket }} rating-big">{{ movie.average_rating if movie.average_rating else '—' }}</span>
+        </div>
+
+        <p class="movie-description mt-4">{{ movie.description }}</p>
+
+        <div class="d-flex gap-2 flex-wrap mt-4">
+          <a href="#review-form" class="btn btn-warning text-dark">Rate Movie</a>
+          <a href="{{ url_for('main.edit_movie', movie_id=movie.id) }}" class="btn btn-outline-light">Edit Movie</a>
+          <form method="POST" action="{{ url_for('main.delete_movie', movie_id=movie.id) }}" onsubmit="return confirm('Delete this movie?');">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn-outline-danger">Delete Movie</button>
+          </form>
+          <a href="{{ url_for('main.index') }}#catalog" class="btn btn-primary">Back to catalog</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5 g-4">
+    <div class="col-lg-5">
+      <div class="glass-card p-4 h-100" id="review-form">
+        <h2 class="h4 mb-3">Write a review</h2>
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            {{ form.rating.label(class_='form-label') }}
+            {{ form.rating(class_='form-select') }}
+          </div>
+          <div class="mb-3">
+            {{ form.comment.label(class_='form-label') }}
+            {{ form.comment(class_='form-control', rows='5', placeholder='Share what you think...') }}
+          </div>
+          {{ form.submit(class_='btn btn-primary w-100') }}
+        </form>
+      </div>
+    </div>
+
+    <div class="col-lg-7">
+      <div class="glass-card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+          <h2 class="h4 mb-0">Reviews ({{ movie.review_count }})</h2>
+          <span class="movie-count-pill">Average: {{ movie.average_rating if movie.average_rating else '—' }}</span>
+        </div>
+
+        {% if movie.reviews %}
+          <div class="review-list">
+            {% for review in movie.reviews|sort(attribute='created_at', reverse=True) %}
+            <div class="review-item">
+              <div class="d-flex justify-content-between align-items-start gap-3">
+                <div>
+                  <div class="fw-semibold">{{ review.author_name }}</div>
+                  <div class="small text-muted">{{ review.created_at.strftime('%b %d, %Y') }}</div>
+                </div>
+                <span class="rating-pill rating-{{ review.rating }}">{{ review.rating }}/5</span>
+              </div>
+              <p class="mb-0 mt-3">{{ review.comment }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="empty-state text-center py-5">
+            <p class="mb-0 text-muted">Be the first to review this movie.</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
