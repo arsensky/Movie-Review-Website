@@ -170,6 +170,20 @@ def movie_detail(movie_id: int):
     form = ReviewForm()
 
     if form.validate_on_submit():
+        existing_review = Review.query.filter_by(
+            movie_id=movie.id,
+            author_name=current_name()
+        ).first()
+
+        if existing_review:
+            flash(
+                'You have already reviewed this movie.',
+                'warning'
+            )
+            return redirect(
+                url_for('main.movie_detail', movie_id=movie.id)
+            )
+
         review = Review(
             movie_id=movie.id,
             author_name=current_name(),
@@ -179,9 +193,15 @@ def movie_detail(movie_id: int):
         db.session.add(review)
         db.session.commit()
         flash('Review posted successfully.', 'success')
-        return redirect(url_for('main.movie_detail', movie_id=movie.id))
+        return redirect(
+            url_for('main.movie_detail', movie_id=movie.id)
+        )
 
-    return render_template('movie_detail.html', movie=movie, form=form)
+    return render_template(
+        'movie_detail.html',
+        movie=movie,
+        form=form
+    )
 
 
 @bp.route('/movies/add', methods=['GET', 'POST'])
