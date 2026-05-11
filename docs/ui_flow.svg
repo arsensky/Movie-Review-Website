@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="800" viewBox="0 0 1800 800">
+  <rect width="1800" height="800" fill="#080c18"/>
+  <text x="80" y="80" fill="#fff" font-size="36" font-family="Arial" font-weight="700">Tasmacritic UI Flow</text>
+  <text x="80" y="120" fill="#cbd5e1" font-size="22" font-family="Arial">Home → Catalog → Movie Detail → Add/Edit Movie → SQLite</text>
+  <g fill="#141d30" stroke="#6366f1" stroke-width="3">
+    <rect x="80" y="300" rx="28" width="260" height="180"/>
+    <rect x="380" y="300" rx="28" width="260" height="180"/>
+    <rect x="680" y="300" rx="28" width="260" height="180"/>
+    <rect x="980" y="300" rx="28" width="260" height="180"/>
+    <rect x="1280" y="300" rx="28" width="260" height="180"/>
+  </g>
+  <g fill="#fff" font-family="Arial" text-anchor="middle">
+    <text x="210" y="356" font-size="28" font-weight="700">Home</text>
+    <text x="210" y="390" font-size="22">Hero + Name</text>
+    <text x="510" y="356" font-size="28" font-weight="700">Catalog</text>
+    <text x="510" y="390" font-size="22">
+      <tspan x="510" dy="0">Search + Filter +</tspan>
+      <tspan x="510" dy="1.2em">Pagination</tspan>
+    </text>
+    <text x="810" y="356" font-size="28" font-weight="700">Movie Detail</text>
+    <text x="810" y="390" font-size="22">Reviews + Rating</text>
+    <text x="1110" y="356" font-size="28" font-weight="700">Add/Edit Movie</text>
+    <text x="1110" y="390" font-size="22">TMDB or Upload Poster</text>
+    <text x="1410" y="356" font-size="28" font-weight="700">SQLite DB</text>
+    <text x="1410" y="390" font-size="22">Movies + Reviews</text>
+  </g>
+  <g stroke="#94a3b8" stroke-width="5" fill="#94a3b8">
+    <line x1="340" y1="390" x2="380" y2="390"/>
+    <polygon points="368,380 380,390 368,400"/>
+    <line x1="640" y1="390" x2="680" y2="390"/>
+    <polygon points="668,380 680,390 668,400"/>
+    <line x1="940" y1="390" x2="980" y2="390"/>
+    <polygon points="968,380 980,390 968,400"/>
+    <line x1="1240" y1="390" x2="1280" y2="390"/>
+    <polygon points="1268,380 1280,390 1268,400"/>
+  </g>
+</svg>

@@ -24,7 +24,7 @@ DEFAULT_MOVIES = [
     {
         'title': 'Avatar Aang: The Last Airbender',
         'genre': 'Fantasy',
-        'year': 2024,
+        'year': 2026,
         'description': 'A young Avatar must master all four elements to restore balance to a divided world.',
     },
     {
