@@ -161,7 +161,7 @@ This is a UI flow diagram:
 Slides are included in the repository:
 
 ```text
-slides/pitch_deck.pptx
+slides/pitch_deck.pdf
 slides/pitch_outline.md
 ```
 
